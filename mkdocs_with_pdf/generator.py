@@ -147,7 +147,8 @@ class Generator(object):
             print(f'{html_string}')
 
         self.logger.info("Rendering for PDF.")
-        html = HTML(string=html_string)
+        baseurl = urls.path2url(config['site_dir'])
+        html = HTML(string=html_string, base_url=baseurl)
         render = html.render()
 
         abs_pdf_path = os.path.join(config['site_dir'], output_path)
