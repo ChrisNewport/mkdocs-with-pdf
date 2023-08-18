@@ -1,4 +1,5 @@
 import os
+import sys
 from urllib.parse import urlparse
 
 from . import _FilterBase
@@ -29,7 +30,10 @@ class URLFilter(_FilterBase):
                 continue
             path = os.path.abspath(os.path.join(d, pathname))
             if os.path.isfile(path):
-                return 'file://' + path
+                if sys.platform == 'win32':
+                    return 'file:///' + path.replace('\\','/')
+                else:
+                    return 'file://' + path
 
         # not found?
         return pathname
